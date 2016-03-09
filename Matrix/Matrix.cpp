@@ -24,7 +24,6 @@ Matrix::Matrix(unsigned int _string, unsigned int _column)
 
 Matrix::Matrix(Matrix const & x) : a(new double *[x.column]), column(x.column), string(x.string)
 {
-	//cout << "копирование" << endl;
 	try {
 		//if (x.a == nullptr || string == 0 || column == 0 || this->a == nullptr) {
 		//	throw "Отсутствие матрицы\n";
@@ -120,7 +119,6 @@ int Matrix::columnsNumber() const
 
 Matrix Matrix::operator =(Matrix& m2)
 {
-	//printf_s("равно\n");
 	try {
 		if (this != &m2) {
 			(Matrix(m2)).swap(*this);
@@ -135,7 +133,6 @@ Matrix Matrix::operator =(Matrix& m2)
 
 Matrix Matrix::operator +(Matrix &m2)
 {
-	//printf_s("сложение\n");
 	try {
 		if (m2.column != this->column || m2.string != this->string)
 			throw "Неверные размеры матриц при сложении\n";
@@ -235,7 +232,6 @@ Matrix Matrix::operator *(Matrix &m2)
 	}
 }
 
-// Получение строки из матрицы	ГОТОВО
 double* Matrix::operator[](int index)
 {
 	try {
@@ -249,16 +245,13 @@ double* Matrix::operator[](int index)
 	}
 }
 
-// Обмен значений	ГОТОВО
 void Matrix::swap(Matrix & x)
 {
-	//cout << "SWAP" << endl;
 	std::swap(x.a, a);
 	std::swap(x.column, column);
 	std::swap(x.string, string);
 }
 
-// Деструктор		ГОТОВО
 Matrix::~Matrix()
 {
 	if (a != nullptr) {

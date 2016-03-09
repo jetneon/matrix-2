@@ -77,6 +77,6 @@ int main()
 	M10 = M2 + M2;
 	M10.writeToConsole();
 	system("pause");
-	//exit(0);
+	
 	return 0;
 }
