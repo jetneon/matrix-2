@@ -19,26 +19,26 @@ int main()
 	printf_s("Введите путь к файлу, в котором содержится матрица:\n");
 	cin >> path;
 	Matrix M1;
-	M1 = M1.readFromFile(path);
+	M1.readFromFile(path);
 	printf_s("Полученная матрица M1:\n");
 	M1.writeToConsole();
 
 	// Инициализация тестовых матриц
-	int **A = (int**)malloc(N * sizeof(int*));
-	int **B = (int**)malloc(N * sizeof(int*));
-	int **C = (int**)malloc(N * sizeof(int*));
-	int **D = (int**)malloc(M * sizeof(int*));
+	double **A = (double**)malloc(N * sizeof(double*));
+	double **B = (double**)malloc(N * sizeof(double*));
+	double **C = (double**)malloc(N * sizeof(double*));
+	double **D = (double**)malloc(M * sizeof(double*));
 
 	for (int i = 0; i < N; i++)
 	{
-		A[i] = (int*)malloc(M * sizeof(int));
-		B[i] = (int*)malloc(M * sizeof(int));
-		C[i] = (int*)malloc(M * sizeof(int));
+		A[i] = (double*)malloc(M * sizeof(double));
+		B[i] = (double*)malloc(M * sizeof(double));
+		C[i] = (double*)malloc(M * sizeof(double));
 	}
 
 	for (int i = 0; i < M; i++)
 	{
-		D[i] = (int*)malloc(N * sizeof(int*));
+		D[i] = (double*)malloc(N * sizeof(double*));
 	}
 
 	srand(time(NULL));
@@ -52,7 +52,7 @@ int main()
 		for (int j = 0; j < N; j++)
 			D[i][j] = rand() % 10;
 
-	Matrix M2(A, N, M), M3(B, N, M), M4(A, N, M), M5, M6(D, M, N), M7;
+	Matrix M2(A, N, M), M3(B, N, M), M4(A, N, M), M5, M6(D, M, N), M7, M8, M9 = M8, M10;
 	printf_s("Тестовая матрица M2:\n");
 	M2.writeToConsole();
 	printf_s("Тестовая матрица M3:\n");
@@ -68,6 +68,14 @@ int main()
 	printf_s("Тестовая матрица M7 = M2 * M6:\n");
 	M7 = M2 * M6;
 	M7.writeToConsole();
+	printf_s("Тестовая матрица M8 = M2 + M6:\n");
+	M8 = M6 + M2;
+	M8.writeToConsole();
+	printf_s("Тестовая матрица M9 (пустая):\n");
+	M9.writeToConsole();
+	printf_s("Тестовая матрица M10 (из пустой => M2 + M2):\n");
+	M10 = M2 + M2;
+	M10.writeToConsole();
 	system("pause");
 	//exit(0);
 	return 0;

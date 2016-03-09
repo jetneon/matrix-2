@@ -84,6 +84,7 @@ CMatrixDLL::CMatrixDLL(int **matr, int _string, int _column)
 // ¬вод
 void CMatrixDLL::read(char *path)
 {
+	std::string s;
 	ifstream input;
 	input.open(path);
 	while (getline(input, s))
