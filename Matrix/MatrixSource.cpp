@@ -19,10 +19,15 @@ int main()
 	printf_s("Введите путь к файлу, в котором содержится матрица:\n");
 	cin >> path;
 	Matrix M1;
-	M1.readFromFile(path);
-	printf_s("Полученная матрица M1:\n");
-	M1.writeToConsole();
-
+	try {
+		M1.readFromFile(path);
+		printf_s("Полученная матрица M1:\n");
+		M1.writeToConsole();
+	}
+	catch (const char* msg)
+	{
+		cout << msg;
+	}
 	// Инициализация тестовых матриц
 	double **A = (double**)malloc(N * sizeof(double*));
 	double **B = (double**)malloc(N * sizeof(double*));
@@ -69,8 +74,13 @@ int main()
 	M7 = M2 * M6;
 	M7.writeToConsole();
 	printf_s("Тестовая матрица M8 = M2 + M6:\n");
-	M8 = M6 + M2;
-	M8.writeToConsole();
+	try	{
+		M8 = M6 + M2;
+		M8.writeToConsole();
+	}
+	catch (const char *msg)	{
+		cout << msg;
+	}
 	printf_s("Тестовая матрица M9 (пустая):\n");
 	M9.writeToConsole();
 	printf_s("Тестовая матрица M10 (из пустой => M2 + M2):\n");

@@ -21,10 +21,10 @@ public:
 	int columnsNumber() const;
 	void readFromFile(char *path);
 
-	Matrix operator =(Matrix& m2);
-	Matrix operator +(Matrix& m2);
-	Matrix operator -(Matrix& m2);
+	Matrix &operator =(const Matrix& m2);
+	Matrix operator +(const Matrix& m2);
+	Matrix operator -(const Matrix& m2);
 	Matrix operator *(double num);
-	Matrix operator *(Matrix& m2);
+	Matrix operator *(const Matrix& m2);
 	double* operator [](int index);
 };

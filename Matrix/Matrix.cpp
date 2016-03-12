@@ -6,28 +6,23 @@
 
 using namespace std;
 
-Matrix::Matrix(unsigned int _string, unsigned int _column)
+Matrix::Matrix(unsigned int _string, unsigned int _column) : a(new double *[string]), string(_string), column(_column)
 {
-	this->string = _string;
-	this->column = _column;
-
-	a = new double *[string];
 	for (int i = 0; i < string; i++) {
 		a[i] = new double[column];
-	}
-	for (int i = 0; i < string; i++) {
 		for (int j = 0; j < column; j++) {
 			a[i][j] = 0;
 		}
 	}
 }
 
-Matrix::Matrix(Matrix const & x) : a(new double *[x.column]), column(x.column), string(x.string)
+
+Matrix::Matrix(const Matrix & x) : a(new double *[x.string]), column(x.column), string(x.string)
 {
 	try {
-		//if (x.a == nullptr || string == 0 || column == 0 || this->a == nullptr) {
-		//	throw "Отсутствие матрицы\n";
-		//}
+		if (x.a == nullptr || string == 0 || column == 0 || this->a == nullptr) {
+			throw "Ошибка конструктора копирования\n";
+		}
 		for (int i = 0; i < string; i++) {
 			a[i] = new double[column];
 			for (int j = 0; j < column; j++) {
@@ -35,23 +30,18 @@ Matrix::Matrix(Matrix const & x) : a(new double *[x.column]), column(x.column), 
 			}
 		}
 	}
-	catch (const std::exception& e) {
+	/*catch (const std::exception& e) {
 		cout << e.what() << '\n';
-	}
+	}*/
 	catch (const char* msg) {
 		std::cout << msg;
 	}
 }
 
-Matrix::Matrix(double **matr, int _string, int _column)
+Matrix::Matrix(double **matr, int _string, int _column) : a(new double *[_string]), string(_string), column(_column)
 {
-	string = _string;
-	column = _column;
-	a = new double*[string];
 	for (int i = 0; i < string; i++) {
 		a[i] = new double[column];
-	}
-	for (int i = 0; i < string; i++) {
 		for (int j = 0; j < column; j++) {
 			a[i][j] = matr[i][j];
 		}
@@ -61,20 +51,15 @@ Matrix::Matrix(double **matr, int _string, int _column)
 
 void Matrix::writeToConsole() const
 {
-	try {
-		if (a == nullptr || string == 0 || column == 0) {
-			throw "Пустая матрица\n";
-		}
-		for (int i = 0; i < this->string; i++) {
-			for (int j = 0; j < this->column; j++) {
-				cout.width(4);
-				cout << (int)this->a[i][j];
-			}
-			cout << endl;
-		}
+	if (this->a == nullptr || this->string == 0 || this->column == 0) {
+		cout << "Пустая матрица\n";
 	}
-	catch (const char* msg) {
-		std::cout << msg;
+	for (int i = 0; i < this->string; i++) {
+		for (int j = 0; j < this->column; j++) {
+			cout.width(4);
+			cout << (int)this->a[i][j];
+		}
+		cout << endl;
 	}
 }
 
@@ -117,119 +102,82 @@ int Matrix::columnsNumber() const
 	return column;
 }
 
-Matrix Matrix::operator =(Matrix& m2)
+Matrix& Matrix::operator =(const Matrix& m2)
 {
-	try {
-		if (this != &m2) {
-			(Matrix(m2)).swap(*this);
-		}
-		return *this;
+	if (this != &m2) {
+		(Matrix(m2)).swap(*this);
 	}
-	catch (const std::exception& e) {
-		cout << e.what() << '\n';
-		return m2;
-	}
+	return *this;
 }
 
-Matrix Matrix::operator +(Matrix &m2)
+Matrix Matrix::operator +(const Matrix &m2)
 {
-	try {
-		if (m2.column != this->column || m2.string != this->string)
-			throw "Неверные размеры матриц при сложении\n";
-		Matrix temp(this->string, this->column);
-
-		for (int i = 0; i < string; i++) {
-			for (int j = 0; j < column; j++) {
-				temp.a[i][j] = this->a[i][j] + m2.a[i][j];
-			}
+	if (m2.column != this->column || m2.string != this->string) {
+		throw "Неверные размеры матриц при сложении\n";
+	}
+	Matrix temp(this->string, this->column);
+	double t = 0;
+	for (int i = 0; i < string; i++) {
+		for (int j = 0; j < column; j++) {
+			t = m2.a[i][j] + a[i][j];
+			temp.a[i][j] = t;
 		}
-		return temp;
+		t = 0;
 	}
-	catch (const std::exception& e) {
-		cout << e.what() << '\n';
-		return Matrix();
-	}
-	catch (const char* msg) {
-		std::cout << msg;
-		return Matrix();
-	}
+	return temp;
 }
 
-Matrix Matrix::operator -(Matrix &m2)
+Matrix Matrix::operator -(const Matrix &m2)
 {
-	try {
-		if (m2.column != this->column || m2.string != this->string)
-			throw "Неверные размеры матриц при вычитании\n";
-		Matrix temp(this->string, this->column);
-
-		for (int i = 0; i < string; i++) {
-			for (int j = 0; j < column; j++) {
-				temp.a[i][j] = this->a[i][j] - m2.a[i][j];
-			}
+	if (m2.column != this->column || m2.string != this->string)
+		throw "Неверные размеры матриц при сложении\n";
+	Matrix temp(this->string, this->column);
+	double t = 0;
+	for (int i = 0; i < string; i++) {
+		for (int j = 0; j < column; j++) {
+			t = m2.a[i][j] - a[i][j];
+			temp.a[i][j] = t;
 		}
-		return temp;
+		t = 0;
 	}
-	catch (const std::exception& e) {
-		cout << e.what() << '\n';
-		return Matrix();
-	}
-	catch (const char* msg) {
-		std::cout << msg;
-		return Matrix();
-	}
+	return temp;
 }
 
 Matrix Matrix::operator *(double num)
 {
-	try {
-		if (this->a == nullptr || this->string == 0 || this->column == 0) {
-			throw "Ошибка. Матрица пуста\n";
+	if (this->a == nullptr || this->string == 0 || this->column == 0) {
+		throw "Ошибка. Матрица пуста\n";
+	}
+	Matrix temp(this->string, this->column);
+	double t = 0;
+	for (int i = 0; i < this->string; i++) {
+		for (int j = 0; j < this->column; j++) {
+			t = this->a[i][j] * num;
+			temp.a[i][j] = t;
 		}
-		Matrix temp(this->string, this->column);
-
-		for (int i = 0; i < this->string; i++) {
-			for (int j = 0; j < this->column; j++) {
-				temp.a[i][j] = this->a[i][j] * num;
-			}
-		}
-		return temp;
 	}
-	catch (const std::exception& e) {
-		cout << e.what() << '\n';
-		return *this;
-	}
-	catch (const char* msg) {
-		std::cout << msg;
-	}
+	return temp;
 }
 
-Matrix Matrix::operator *(Matrix &m2)
+Matrix Matrix::operator *(const Matrix &m2)
 {
-	try {
-		if (this->column != m2.string) {
-			throw "Неверные размеры матриц при умножении\n";
-		}
-		Matrix temp(this->string, m2.column);
+	if (this->column != m2.string) {
+		throw "Неверные размеры матриц при умножении\n";
+	}
+	Matrix temp(this->string, m2.column);
 
-		double t = 0;
+	double t = 0;
 
-		for (int row = 0; row < this->string; row++) {
-			for (int col = 0; col < m2.column; col++) {
-				t = 0;
-				for (int inner = 0; inner < m2.string; inner++) {
-					t += this->a[row][inner] * m2.a[inner][col];
-				}
-				temp.a[row][col] = t;
+	for (int row = 0; row < this->string; row++) { // Строка 1-ой матрицы
+		for (int col = 0; col < m2.column; col++) { // Столбец второй матрицы
+			t = 0;
+			for (int inner = 0; inner < this->column; inner++) {
+				t = t + this->a[row][inner] * m2.a[inner][col];
 			}
+			temp.a[row][col] = t;
 		}
-		return temp;
 	}
-	catch (const std::exception& e) {
-		cout << e.what() << '\n';
-	}
-	catch (const char* msg) {
-		cout << msg;
-	}
+	return temp;
 }
 
 double* Matrix::operator[](int index)
