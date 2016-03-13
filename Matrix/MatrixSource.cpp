@@ -1,6 +1,3 @@
-// Matrix.cpp: определяет точку входа для консольного приложения.
-//
-
 #include "stdafx.h"
 
 #include <time.h>
@@ -25,7 +22,7 @@ int main() {
 	catch (const char* msg) {
 		cout << msg;
 	}
-	// Инициализация тестовых матриц
+
 	double **A = (double**)malloc(N * sizeof(double*));
 	double **B = (double**)malloc(N * sizeof(double*));
 	double **C = (double**)malloc(N * sizeof(double*));
