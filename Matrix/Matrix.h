@@ -4,11 +4,11 @@ class Matrix {
 private:
 	void swap(Matrix & x);
 	double **a;
-	int column;
-	int string;
+	int m_columns;
+	int m_rows;
 
 public:
-	Matrix() : string(0), column(0), a(nullptr) {};
+	Matrix() : m_rows(0), m_columns(0), a(nullptr) {};
 	Matrix(unsigned int n, unsigned int m);
 	Matrix(double **matr, unsigned int _n, unsigned int _m);
 	Matrix(Matrix const & x);

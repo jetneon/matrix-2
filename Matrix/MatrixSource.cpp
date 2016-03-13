@@ -14,12 +14,12 @@ using namespace std;
 int main() {
 	setlocale(LC_CTYPE, "Russian_Russia.1251");
 	char* path = new char[256];
-	printf_s("Введите путь к файлу, в котором содержится матрица:\n");
+	printf_s("Enter path to input file:\n");
 	cin >> path;
 	Matrix M1;
 	try {
 		M1.readFromFile(path);
-		printf_s("Полученная матрица M1:\n");
+		printf_s("Matrix M1:\n");
 		M1.writeToConsole();
 	}
 	catch (const char* msg) {
@@ -52,22 +52,22 @@ int main() {
 			D[i][j] = rand() % 10;
 
 	Matrix M2(A, N, M), M3(B, N, M), M4(A, N, M), M5, M6(D, M, N), M7, M8, M9 = M8, M10;
-	printf_s("Тестовая матрица M2:\n");
+	printf_s("Matrix M2:\n");
 	M2.writeToConsole();
-	printf_s("Тестовая матрица M3:\n");
+	printf_s("Matrix M3:\n");
 	M3.writeToConsole();
-	printf_s("Тестовая матрица M4 = M2 + M3:\n");
+	printf_s("Matrix M4 = M2 + M3:\n");
 	M4 = M2 + M3;
 	M4.writeToConsole();
-	printf_s("Тестовая матрица M5 = 2 * M3:\n");
+	printf_s("Matrix M5 = 2 * M3:\n");
 	M5 = M3 * 2;
 	M5.writeToConsole();
-	printf_s("Тестовая матрица M6:\n");
+	printf_s("Matrix M6:\n");
 	M6.writeToConsole();
-	printf_s("Тестовая матрица M7 = M2 * M6:\n");
+	printf_s("Matrix M7 = M2 * M6:\n");
 	M7 = M2 * M6;
 	M7.writeToConsole();
-	printf_s("Тестовая матрица M8 = M2 + M6:\n");
+	printf_s("Matrix M8 = M2 + M6:\n");
 	try {
 		M8 = M6 + M2;
 		M8.writeToConsole();
@@ -75,9 +75,9 @@ int main() {
 	catch (const char *msg) {
 		cout << msg;
 	}
-	printf_s("Тестовая матрица M9 (пустая):\n");
+	printf_s("Matrix M9 (empty):\n");
 	M9.writeToConsole();
-	printf_s("Тестовая матрица M10 (из пустой => M2 + M2):\n");
+	printf_s("Matrix M10 (empty => M2 + M2):\n");
 	M10 = M2 + M2;
 	M10.writeToConsole();
 	system("pause");
