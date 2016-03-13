@@ -4,7 +4,6 @@
 #include "stdafx.h"
 
 #include <time.h>
-#include <locale>
 #include <fstream>
 
 using namespace std;
@@ -12,9 +11,8 @@ using namespace std;
 #define N 3
 #define M 5
 
-int main()
-{
-	setlocale(LC_ALL, "RUSSIAN");
+int main() {
+	setlocale(LC_CTYPE, "Russian_Russia.1251");
 	char* path = new char[256];
 	printf_s("Введите путь к файлу, в котором содержится матрица:\n");
 	cin >> path;
@@ -24,8 +22,7 @@ int main()
 		printf_s("Полученная матрица M1:\n");
 		M1.writeToConsole();
 	}
-	catch (const char* msg)
-	{
+	catch (const char* msg) {
 		cout << msg;
 	}
 	// Инициализация тестовых матриц
@@ -34,22 +31,19 @@ int main()
 	double **C = (double**)malloc(N * sizeof(double*));
 	double **D = (double**)malloc(M * sizeof(double*));
 
-	for (int i = 0; i < N; i++)
-	{
+	for (int i = 0; i < N; i++) {
 		A[i] = (double*)malloc(M * sizeof(double));
 		B[i] = (double*)malloc(M * sizeof(double));
 		C[i] = (double*)malloc(M * sizeof(double));
 	}
 
-	for (int i = 0; i < M; i++)
-	{
+	for (int i = 0; i < M; i++) {
 		D[i] = (double*)malloc(N * sizeof(double*));
 	}
 
 	srand(time(NULL));
 	for (int i = 0; i < N; i++)
-		for (int j = 0; j < M; j++)
-		{
+		for (int j = 0; j < M; j++) {
 			A[i][j] = rand() % 10;
 			B[i][j] = rand() % 10;
 		}
@@ -74,11 +68,11 @@ int main()
 	M7 = M2 * M6;
 	M7.writeToConsole();
 	printf_s("Тестовая матрица M8 = M2 + M6:\n");
-	try	{
+	try {
 		M8 = M6 + M2;
 		M8.writeToConsole();
 	}
-	catch (const char *msg)	{
+	catch (const char *msg) {
 		cout << msg;
 	}
 	printf_s("Тестовая матрица M9 (пустая):\n");
@@ -87,6 +81,6 @@ int main()
 	M10 = M2 + M2;
 	M10.writeToConsole();
 	system("pause");
-	
+
 	return 0;
 }

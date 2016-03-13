@@ -1,7 +1,6 @@
 #pragma once
 
-class Matrix
-{
+class Matrix {
 private:
 	void swap(Matrix & x);
 	double **a;
@@ -11,14 +10,13 @@ private:
 public:
 	Matrix() : string(0), column(0), a(nullptr) {};
 	Matrix(unsigned int n, unsigned int m);
-	Matrix(double **matr, int _n, int _m);
+	Matrix(double **matr, unsigned int _n, unsigned int _m);
 	Matrix(Matrix const & x);
-	//static Matrix &readFromFile(char* path);            
 	~Matrix();
 
 	void writeToConsole() const;
-	int rowsNumber() const;
-	int columnsNumber() const;
+	unsigned int rowsNumber() const;
+	unsigned int columnsNumber() const;
 	void readFromFile(char *path);
 
 	Matrix &operator =(const Matrix& m2);
@@ -26,5 +24,5 @@ public:
 	Matrix operator -(const Matrix& m2);
 	Matrix operator *(double num);
 	Matrix operator *(const Matrix& m2);
-	double* operator [](int index);
+	double* operator [](unsigned int index);
 };

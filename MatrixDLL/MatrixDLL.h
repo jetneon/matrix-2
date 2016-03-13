@@ -12,36 +12,29 @@
 
 // Этот класс экспортирован из MatrixDLL.dll
 
-class MATRIXDLL_API CMatrixDLL 
-{
+class MATRIXDLL_API Matrix {
+private:
+	void swap(Matrix & x);
+	double **a;
+	int column;
+	int string;
 
-	void swap(CMatrixDLL & x);
-	double **a;		// Массив (сама матрица)
-	int column;		// Столбцы
-	int string;		// Строки
 public:
-	CMatrixDLL(void);
-	CMatrixDLL(int **matr, int _n, int _m);		// Вспомогательный метод. Только внутри программы
-	CMatrixDLL(int, int);						// Конструктор, принимающий размеры массива
-	CMatrixDLL(CMatrixDLL const & x);
-	~CMatrixDLL();
+	Matrix() : string(0), column(0), a(nullptr) {};
+	Matrix(unsigned int n, unsigned int m);
+	Matrix(double **matr, unsigned int _n, unsigned int _m);
+	Matrix(Matrix const & x);
+	~Matrix();
 
-	void read(char *path);						// Чтение массива из консоли
-	void write();								// Вывод массива на консоль
-	int getStringNumber(CMatrixDLL);
-	int getColumnNumber(CMatrixDLL);
+	void writeToConsole() const;
+	unsigned int rowsNumber() const;
+	unsigned int columnsNumber() const;
+	void readFromFile(char *path);
 
-	// Перегрузка опреторов
-	CMatrixDLL& operator =(const CMatrixDLL& m2);
-	CMatrixDLL operator +(const CMatrixDLL& m2);
-	CMatrixDLL operator -(const CMatrixDLL& m2);
-	CMatrixDLL operator *(double num);
-	CMatrixDLL operator *(const CMatrixDLL& m2);
-	double*& operator [](int index);
-
-	CMatrixDLL error(CMatrixDLL);
+	Matrix &operator =(const Matrix& m2);
+	Matrix operator +(const Matrix& m2);
+	Matrix operator -(const Matrix& m2);
+	Matrix operator *(double num);
+	Matrix operator *(const Matrix& m2);
+	double* operator [](unsigned int index);
 };
-
-extern MATRIXDLL_API int nMatrixDLL;
-
-MATRIXDLL_API int fnMatrixDLL(void);
