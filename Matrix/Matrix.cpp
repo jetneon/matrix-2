@@ -35,7 +35,7 @@ Matrix::Matrix(double **matr, unsigned int _string, unsigned int _column) : a(ne
 
 void Matrix::writeToConsole() const {
 	if (this->a == nullptr || this->string == 0 || this->column == 0) {
-		cout << "Ïóñòàÿ ìàòðèöà\n";
+		cout << "ÐŸÑƒÑÑ‚Ð°Ñ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ð°\n";
 	}
 	for (int i = 0; i < this->string; i++) {
 		for (int j = 0; j < this->column; j++) {
@@ -90,7 +90,7 @@ Matrix& Matrix::operator =(const Matrix& m2) {
 
 Matrix Matrix::operator +(const Matrix &m2) {
 	if (m2.column != this->column || m2.string != this->string) {
-		throw "Íåâåðíûå ðàçìåðû ìàòðèö ïðè ñëîæåíèè\n";
+		throw "ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ† Ð¿Ñ€Ð¸ ÑÐ»Ð¾Ð¶ÐµÐ½Ð¸Ð¸\n";
 	}
 	Matrix temp(this->string, this->column);
 	for (int i = 0; i < this->string; i++) {
@@ -103,7 +103,7 @@ Matrix Matrix::operator +(const Matrix &m2) {
 
 Matrix Matrix::operator -(const Matrix &m2) {
 	if (m2.column != this->column || m2.string != this->string)
-		throw "Íåâåðíûå ðàçìåðû ìàòðèö ïðè âû÷èòàíèè\n";
+		throw "ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ† Ð¿Ñ€Ð¸ Ð²Ñ‹Ñ‡Ð¸Ñ‚Ð°Ð½Ð¸Ð¸\n";
 	Matrix temp(this->string, this->column);
 	for (int i = 0; i < this->string; i++) {
 		for (int j = 0; j < this->column; j++) {
@@ -115,7 +115,7 @@ Matrix Matrix::operator -(const Matrix &m2) {
 
 Matrix Matrix::operator *(double num) {
 	if (this->a == nullptr || this->string == 0 || this->column == 0) {
-		throw "Îøèáêà. Ìàòðèöà ïóñòà\n";
+		throw "ÐžÑˆÐ¸Ð±ÐºÐ°. ÐœÐ°Ñ‚Ñ€Ð¸Ñ†Ð° Ð¿ÑƒÑÑ‚Ð°\n";
 	}
 	Matrix temp(this->string, this->column);
 	for (int i = 0; i < this->string; i++) {
@@ -128,7 +128,7 @@ Matrix Matrix::operator *(double num) {
 
 Matrix Matrix::operator *(const Matrix &m2) {
 	if (this->column != m2.string) {
-		throw "Íåâåðíûå ðàçìåðû ìàòðèö ïðè óìíîæåíèè\n";
+		throw "ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ† Ð¿Ñ€Ð¸ ÑƒÐ¼Ð½Ð¾Ð¶ÐµÐ½Ð¸Ð¸\n";
 	}
 	Matrix temp(this->string, m2.column);
 
