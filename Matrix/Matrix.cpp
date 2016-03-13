@@ -6,41 +6,41 @@
 
 using namespace std;
 
-Matrix::Matrix(unsigned int _string, unsigned int _column) : a(new double *[_string]), string(_string), column(_column) {
-	for (int i = 0; i < string; i++) {
-		a[i] = new double[column];
-		for (int j = 0; j < column; j++) {
-			a[i][j] = 0;
+Matrix::Matrix(unsigned int _m_rows, unsigned int _m_columns) : matrix(new double *[_m_rows]), m_rows(_m_rows), m_columns(_m_columns) {
+	for (int i = 0; i < m_rows; i++) {
+		matrix[i] = new double[m_columns];
+		for (int j = 0; j < m_columns; j++) {
+			matrix[i][j] = 0;
 		}
 	}
 }
 
-Matrix::Matrix(const Matrix & x) : a(new double *[x.string]), column(x.column), string(x.string) {
-	for (int i = 0; i < string; i++) {
-		a[i] = new double[column];
-		for (int j = 0; j < column; j++) {
-			a[i][j] = x.a[i][j];
+Matrix::Matrix(const Matrix & x) : matrix(new double *[x.m_rows]), m_columns(x.m_columns), m_rows(x.m_rows) {
+	for (int i = 0; i < m_rows; i++) {
+		matrix[i] = new double[m_columns];
+		for (int j = 0; j < m_columns; j++) {
+			matrix[i][j] = x.matrix[i][j];
 		}
 	}
 }
 
-Matrix::Matrix(double **matr, unsigned int _string, unsigned int _column) : a(new double *[_string]), string(_string), column(_column) {
-	for (int i = 0; i < string; i++) {
-		a[i] = new double[column];
-		for (int j = 0; j < column; j++) {
-			a[i][j] = matr[i][j];
+Matrix::Matrix(double **matr, unsigned int _m_rows, unsigned int _m_columns) : matrix(new double *[_m_rows]), m_rows(_m_rows), m_columns(_m_columns) {
+	for (int i = 0; i < m_rows; i++) {
+		matrix[i] = new double[m_columns];
+		for (int j = 0; j < m_columns; j++) {
+			matrix[i][j] = matr[i][j];
 		}
 	}
 }
 
 void Matrix::writeToConsole() const {
-	if (this->a == nullptr || this->string == 0 || this->column == 0) {
+	if (this->matrix == nullptr || this->m_rows == 0 || this->m_columns == 0) {
 		cout << "Empty matrix\n";
 	}
-	for (int i = 0; i < this->string; i++) {
-		for (int j = 0; j < column; j++) {
+	for (int i = 0; i < m_rows; i++) {
+		for (int j = 0; j < m_columns; j++) {
 			cout.width(4);
-			cout << (int)this->a[i][j];
+			cout << (int)this->matrix[i][j];
 		}
 		cout << endl;
 	}
@@ -51,20 +51,20 @@ void Matrix::readFromFile(char* path) {
 	try {
 		stream.open(path);
 
-		int string, column;
+		int m_rows, m_columns;
 
-		stream >> string >> column;
-		double **mass = new double*[string];
-		for (int i = 0; i < string; i++) {
-			mass[i] = new double[column];
-			for (int j = 0; j < column; j++) {
+		stream >> m_rows >> m_columns;
+		double **mass = new double*[m_rows];
+		for (int i = 0; i < m_rows; i++) {
+			mass[i] = new double[m_columns];
+			for (int j = 0; j < m_columns; j++) {
 				stream >> mass[i][j];
 			}
 		}
 
-		this->a = mass;
-		this->string = string;
-		this->column = column;
+		this->matrix = mass;
+		this->m_rows = m_rows;
+		this->m_columns = m_columns;
 		stream.close();
 	}
 	catch (const std::exception& e) {
@@ -74,11 +74,11 @@ void Matrix::readFromFile(char* path) {
 }
 
 unsigned int Matrix::rowsNumber() const {
-	return string;
+	return m_rows;
 }
 
 unsigned int Matrix::columnsNumber() const {
-	return column;
+	return m_columns;
 }
 
 Matrix& Matrix::operator =(const Matrix& m2) {
@@ -89,58 +89,58 @@ Matrix& Matrix::operator =(const Matrix& m2) {
 }
 
 Matrix Matrix::operator +(const Matrix &m2) {
-	if (m2.column != this->column || m2.string != this->string) {
+	if (m2.m_columns != this->m_columns || m2.m_rows != this->m_rows) {
 		throw "Wrong sizes of matrixes\n";
 	}
-	Matrix temp(this->string, this->column);
-	for (int i = 0; i < this->string; i++) {
-		for (int j = 0; j < this->column; j++) {
-			temp[i][j] = m2.a[i][j] + this->a[i][j];
+	Matrix temp(this->m_rows, this->m_columns);
+	for (int i = 0; i < this->m_rows; i++) {
+		for (int j = 0; j < this->m_columns; j++) {
+			temp[i][j] = m2.matrix[i][j] + this->matrix[i][j];
 		}
 	}
 	return temp;
 }
 
 Matrix Matrix::operator -(const Matrix &m2) {
-	if (m2.column != this->column || m2.string != this->string)
+	if (m2.m_columns != this->m_columns || m2.m_rows != this->m_rows)
 		throw "Wrong sizes of matrixes\n";
-	Matrix temp(this->string, this->column);
-	for (int i = 0; i < this->string; i++) {
-		for (int j = 0; j < this->column; j++) {
-			temp.a[i][j] = m2.a[i][j] - a[i][j];
+	Matrix temp(this->m_rows, this->m_columns);
+	for (int i = 0; i < this->m_rows; i++) {
+		for (int j = 0; j < this->m_columns; j++) {
+			temp.matrix[i][j] = m2.matrix[i][j] - matrix[i][j];
 		}
 	}
 	return temp;
 }
 
 Matrix Matrix::operator *(double num) {
-	if (this->a == nullptr || this->string == 0 || this->column == 0) {
+	if (this->matrix == nullptr || this->m_rows == 0 || this->m_columns == 0) {
 		throw "Error. Matrix is empty\n";
 	}
-	Matrix temp(this->string, this->column);
-	for (int i = 0; i < this->string; i++) {
-		for (int j = 0; j < this->column; j++) {
-			temp.a[i][j] = this->a[i][j] * num;
+	Matrix temp(this->m_rows, this->m_columns);
+	for (int i = 0; i < this->m_rows; i++) {
+		for (int j = 0; j < this->m_columns; j++) {
+			temp.matrix[i][j] = this->matrix[i][j] * num;
 		}
 	}
 	return temp;
 }
 
 Matrix Matrix::operator *(const Matrix &m2) {
-	if (this->column != m2.string) {
+	if (this->m_columns != m2.m_rows) {
 		throw "Wrong sizes of matrixes\n";
 	}
-	Matrix temp(this->string, m2.column);
+	Matrix temp(this->m_rows, m2.m_columns);
 
 	double t = 0;
 
-	for (int row = 0; row < this->string; row++) {
-		for (int col = 0; col < m2.column; col++) {
+	for (int row = 0; row < this->m_rows; row++) {
+		for (int col = 0; col < m2.m_columns; col++) {
 			t = 0;
-			for (int inner = 0; inner < this->column; inner++) {
-				t = t + this->a[row][inner] * m2.a[inner][col];
+			for (int inner = 0; inner < this->m_columns; inner++) {
+				t = t + this->matrix[row][inner] * m2.matrix[inner][col];
 			}
-			temp.a[row][col] = t;
+			temp.matrix[row][col] = t;
 		}
 	}
 	return temp;
@@ -148,22 +148,22 @@ Matrix Matrix::operator *(const Matrix &m2) {
 
 
 double* Matrix::operator[](unsigned int index) {
-	return this->a[index];
+	return this->matrix[index];
 }
 
 void Matrix::swap(Matrix & x) {
-	std::swap(x.a, a);
-	std::swap(x.column, column);
-	std::swap(x.string, string);
+	std::swap(x.matrix, matrix);
+	std::swap(x.m_columns, m_columns);
+	std::swap(x.m_rows, m_rows);
 }
 
 Matrix::~Matrix() {
-	string = 0;
-	column = 0;
-	if (a != nullptr) {
-		for (int i = 0; i < string; i++) {
-			delete[] a[i];
+	m_rows = 0;
+	m_columns = 0;
+	if (matrix != nullptr) {
+		for (int i = 0; i < m_rows; i++) {
+			delete[] matrix[i];
 		}
-		delete[] a;
+		delete[] matrix;
 	}
 }

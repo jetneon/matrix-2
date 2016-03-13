@@ -3,21 +3,21 @@
 class Matrix {
 private:
 	void swap(Matrix & x);
-	double **a;
-	int column;
-	int string;
+	double **matrix;
+	int m_columns;
+	int m_rows;
 
 public:
-	Matrix() : string(0), column(0), a(nullptr) {};
+	Matrix() : m_rows(0), m_columns(0), matrix(nullptr) {};
 	Matrix(unsigned int n, unsigned int m);
 	Matrix(double **matr, unsigned int _n, unsigned int _m);
 	Matrix(Matrix const & x);
 	~Matrix();
 
-	void writeToConsole() const;
 	unsigned int rowsNumber() const;
 	unsigned int columnsNumber() const;
 	void readFromFile(char *path);
+	void writeToConsole() const;
 
 	Matrix &operator =(const Matrix& m2);
 	Matrix operator +(const Matrix& m2);
