@@ -158,8 +158,6 @@ void Matrix::swap(Matrix & x) {
 }
 
 Matrix::~Matrix() {
-	m_rows = 0;
-	m_columns = 0;
 	if (matrix != nullptr) {
 		for (int i = 0; i < m_rows; i++) {
 			delete[] matrix[i];
