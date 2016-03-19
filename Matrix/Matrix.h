@@ -17,19 +17,18 @@ public:
 	CMatrix(CMatrix const & x);
 	~CMatrix<T>();
 
-	unsigned int rowsNumber() const;
-	unsigned int columnsNumber() const;
-	double** getCMatrix() const;
+	unsigned int rowsNumber() const; // Tested
+	unsigned int columnsNumber() const; // Tested
 	bool readFromFile(char *path);
 	void writeToConsole() const;
 
 	CMatrix &operator =(const CMatrix& m2);
-	CMatrix operator +(const CMatrix& m2);
-	CMatrix operator -(const CMatrix& m2);
-	CMatrix operator *(double num);
-	CMatrix operator *(const CMatrix& m2);
+	CMatrix operator +(const CMatrix& m2); // Tested
+	CMatrix operator -(const CMatrix& m2); // Tested
+	CMatrix operator *(double num); // Tested
+	CMatrix operator *(const CMatrix& m2); // Tested
 	bool operator ==(const CMatrix& m2);
-	T* operator [](unsigned int index);
+	T* operator [](unsigned int index); // Tested
 };
 
 #include "Matrix.cpp"

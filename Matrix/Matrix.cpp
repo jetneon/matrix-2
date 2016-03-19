@@ -97,11 +97,6 @@ unsigned int CMatrix<T>::columnsNumber() const {
 }
 
 template <typename T>
-double ** CMatrix<T>::getCMatrix() const {
-	return matrix;
-}
-
-template <typename T>
 CMatrix<T> & CMatrix<T>::operator =(const CMatrix<T>& m2) {
 	if (this != &m2) {
 		(CMatrix(m2)).swap(*this);
@@ -130,7 +125,7 @@ CMatrix<T> CMatrix<T>::operator -(const CMatrix<T> &m2) {
 	CMatrix temp(this->m_rows, this->m_columns);
 	for (int i = 0; i < this->m_rows; i++) {
 		for (int j = 0; j < this->m_columns; j++) {
-			temp.matrix[i][j] = m2.matrix[i][j] - matrix[i][j];
+			temp.matrix[i][j] = matrix[i][j] - m2.matrix[i][j];
 		}
 	}
 	return temp;
@@ -190,7 +185,7 @@ bool CMatrix<T>::operator ==(const CMatrix & m2) {
 
 template <typename T>
 T* CMatrix<T>::operator[](unsigned int index) {
-	return this->matrix[index];
+	return matrix[index];
 }
 
 template <typename T>
