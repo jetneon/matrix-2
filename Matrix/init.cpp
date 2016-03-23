@@ -136,7 +136,6 @@ SCENARIO("Matrix operator <<", "[print]") {
 	ifstream secondInput("A2x2out.txt");
 	CMatrix<int> A(2, 2);
 	input >> A;
-	getchar();
 	REQUIRE(out << A);
 	REQUIRE(secondInput >> A);
 	out.close();
