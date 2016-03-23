@@ -11,7 +11,7 @@ template <class T>
 std::ostream & operator<<(std::ostream & output, const CMatrix<T> &);
 
 template <class T>
-std::istream & operator>>(std::istream & output, CMatrix<T> &);
+std::istream & operator>>(std::istream & input, CMatrix<T> &);
 
 template <typename T>
 class CMatrix {
