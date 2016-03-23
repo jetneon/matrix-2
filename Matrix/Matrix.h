@@ -2,6 +2,17 @@
 #ifndef MATR_H
 #define NATR_H
 
+#include <iostream>
+
+template <typename T>
+class CMatrix;
+
+template <class T>
+std::ostream & operator<<(std::ostream & output, const CMatrix<T> &);
+
+template <class T>
+std::istream & operator>>(std::istream & output, CMatrix<T> &);
+
 template <typename T>
 class CMatrix {
 private:
@@ -11,25 +22,28 @@ private:
 	int m_rows;
 
 public:
-	CMatrix<T>() : m_rows(0), m_columns(0), matrix(nullptr) {};
-	CMatrix(unsigned int n, unsigned int m);
+	CMatrix<T>() : m_rows(0), m_columns(0), matrix(nullptr) {}; // Done
+	CMatrix(unsigned int n, unsigned int m); // Done
 	CMatrix(T **matr, unsigned int _n, unsigned int _m);
 	CMatrix(CMatrix const & x);
 	~CMatrix<T>();
 
-	unsigned int rowsNumber() const; // Tested
-	unsigned int columnsNumber() const; // Tested
-	bool readFromFile(char *path);
-	void writeToConsole() const;
+	unsigned int rowsNumber() const; // Done
+	unsigned int columnsNumber() const; // Done
+	bool readFromFile(char *path); // Done
 
 	CMatrix &operator =(const CMatrix& m2);
-	CMatrix operator +(const CMatrix& m2); // Tested
-	CMatrix operator -(const CMatrix& m2); // Tested
-	CMatrix operator *(double num); // Tested
-	CMatrix operator *(const CMatrix& m2); // Tested
-	bool operator ==(const CMatrix& m2);
-	T* operator [](unsigned int index); // Tested
+	CMatrix operator +(const CMatrix& m2); // Done
+	CMatrix operator -(const CMatrix& m2); // Done
+	CMatrix operator *(double num); // Done
+	CMatrix operator *(const CMatrix& m2); // Done
+	bool operator ==(const CMatrix& m2); // Done
+	T* operator [](unsigned int index); // Done
+
+	friend std::ostream & operator<< <>(std::ostream & output, const CMatrix<T> & matrix); // Done
+	friend std::istream & operator>> <>(std::istream & input, CMatrix<T> & matrix); // Done
 };
+
 
 #include "Matrix.cpp"
 

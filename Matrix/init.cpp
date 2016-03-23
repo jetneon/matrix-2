@@ -8,17 +8,15 @@ SCENARIO("Matrix init", "[init]") {
 		auto columns = 3;
 		WHEN("Create instansce of Matrix") {
 			CMatrix<int> m(rows, columns);
+			CMatrix<int> a;
 			THEN("The number of rows and columns must be preserved") {
 				REQUIRE(m.rowsNumber() == rows);
 				REQUIRE(m.columnsNumber() == columns);
+				REQUIRE(a.rowsNumber() == 0);
+				REQUIRE(a.columnsNumber() == 0);
 			}
 		}
 	}
-}
-
-SCENARIO("Matrix: readFromFile()", "[fill]") {
-	CMatrix<double> A;
-	REQUIRE(A.readFromFile("A2x2.txt"));
 }
 
 SCENARIO("Matrix: operator +", "[addition]") {
@@ -75,6 +73,15 @@ SCENARIO("Matrix: operator [](index)", "[get row]") {
 	REQUIRE(flag);
 }
 
+SCENARIO("Matrix: operator ==", "[equal]") {
+	CMatrix<int> A, B;
+	A.readFromFile("A2x2.txt");
+	B.readFromFile("A2x2.txt");
+	bool flag = (A == B);
+
+	REQUIRE(flag);
+}
+
 SCENARIO("Matrix: rowsNumber()", "[rows number]") {
 	CMatrix<int> A(3, 3);
 
@@ -85,4 +92,58 @@ SCENARIO("Matrix: columnsNumber()", "[columns number]") {
 	CMatrix<int> A(3, 3);
 
 	REQUIRE(A.columnsNumber() == 3);
+}
+
+SCENARIO("Matrix: readFromFile()", "[filling]") {
+	CMatrix<int> A;
+	int** a = new int*[2];
+	int *row;
+	for (int i = 0; i < 2; i++) {
+		a[i] = new int[2];
+	}
+	a[0][0] = 1;
+	a[0][1] = 2;
+	a[1][0] = 3;
+	a[1][1] = 4;
+	A.readFromFile("A2x2.txt");
+
+	bool flag = true;
+	for (int i = 0; i < 2; i++) {
+		row = A[i];
+		for (int j = 0; j < 2; j++) {
+			if (a[i][j] != row[j]) {
+				flag = false;
+			}
+		}
+	}
+
+	REQUIRE(flag);
+}
+
+SCENARIO("Matrix operator >>", "[fill]") {
+	std::ifstream input("A2x2op.txt");
+	CMatrix<int> A(2, 2);
+	REQUIRE(input >> A);
+	REQUIRE(A[0][0] == 1);
+	REQUIRE(A[0][1] == 2);
+	REQUIRE(A[1][0] == 3);
+	REQUIRE(A[1][1] == 4);
+}
+
+SCENARIO("Matrix operator <<", "[print]") {
+	std::ifstream input("A2x2op.txt");
+	fstream out; out.open("A2x2out.txt");
+	ifstream secondInput("A2x2out.txt");
+	CMatrix<int> A(2, 2);
+	input >> A;
+	getchar();
+	REQUIRE(out << A);
+	REQUIRE(secondInput >> A);
+	out.close();
+	input.close();
+	secondInput.close();
+	REQUIRE(A[0][0] == 1);
+	REQUIRE(A[0][1] == 2);
+	REQUIRE(A[1][0] == 3);
+	REQUIRE(A[1][1] == 4);
 }

@@ -40,20 +40,6 @@ CMatrix<T>::CMatrix(T **matr, unsigned int _m_rows, unsigned int _m_columns) : m
 }
 
 template <typename T>
-void CMatrix<T>::writeToConsole() const {
-	if (this->matrix == nullptr || this->m_rows == 0 || this->m_columns == 0) {
-		cout << "Empty matrix\n";
-	}
-	for (int i = 0; i < m_rows; i++) {
-		for (int j = 0; j < m_columns; j++) {
-			cout.width(4);
-			cout << this->matrix[i][j];
-		}
-		cout << endl;
-	}
-}
-
-template <typename T>
 bool CMatrix<T>::readFromFile(char* path) {
 	ifstream stream;
 	try {
@@ -134,7 +120,7 @@ CMatrix<T> CMatrix<T>::operator -(const CMatrix<T> &m2) {
 template <typename T>
 CMatrix<T> CMatrix<T>::operator *(double num) {
 	if (this->matrix == nullptr || this->m_rows == 0 || this->m_columns == 0) {
-		throw "Error. CMatrix is empty\n";
+		throw "Error. Matrix is empty\n";
 	}
 	CMatrix temp(this->m_rows, this->m_columns);
 	for (int i = 0; i < this->m_rows; i++) {
@@ -185,7 +171,10 @@ bool CMatrix<T>::operator ==(const CMatrix & m2) {
 
 template <typename T>
 T* CMatrix<T>::operator[](unsigned int index) {
-	return matrix[index];
+	if (m_rows == 0 || matrix == nullptr) {
+		throw "Empty matrix\n";
+	}
+	return this->matrix[index];
 }
 
 template <typename T>
@@ -204,4 +193,31 @@ CMatrix<T>::~CMatrix() {
 		delete[] matrix;
 	}
 }
+
+template <typename T>
+std::ostream & operator<<(std::ostream & os, const CMatrix<T> & x) {
+	for (int i = 0; i < x.m_rows; ++i) {
+		for (int j = 0; j < x.m_columns; ++j) {
+			os.width(4);
+			os << x.matrix[i][j];
+		}
+		os << std::endl;
+	}
+
+	return os;
+}
+
+template <typename T>
+std::istream & operator>>(std::istream & input, CMatrix<T> & matrix) {
+	for (int i = 0; i < matrix.m_rows; ++i) {
+		for (int j = 0; j < matrix.m_columns; ++j) {
+			if (!(input >> matrix.matrix[i][j])) {
+				throw "Error in input stream\n";
+			}
+		}
+	}
+
+	return input;
+}
 #endif
+
