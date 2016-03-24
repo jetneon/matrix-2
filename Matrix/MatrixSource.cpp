@@ -22,7 +22,7 @@ int main() {
 	catch (const char* msg) {
 		cout << msg;
 	}
-
+	delete[] path;
 	double **A = (double**)malloc(N * sizeof(double*));
 	double **B = (double**)malloc(N * sizeof(double*));
 	int **C = (int**)malloc(N * sizeof(int*));
@@ -81,6 +81,25 @@ int main() {
 	printf_s("Matrix M11 (int test):\n");
 	CMatrix<int> M11(C, N, M);
 	M11.writeToConsole();
+
+	printf_s("Operator << test:\n");
+	cout << M2;
+	printf_s("Operator >> test:\n");
+	CMatrix<int> M12(2, 2);
+	cin >> M12;
+	cout << M12;
+	for (int i = 0; i < N; i++) {
+		delete[] A[i];
+		delete[] B[i];
+		delete[] C[i];
+	}
+	delete[] A;
+	delete[] B;
+	delete[] C;
+	for (int i = 0; i < M; i++) {
+		delete[] D[i];
+	}
+	delete[] D;
 	system("pause");
 
 	return 0;
