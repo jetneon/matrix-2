@@ -17,7 +17,7 @@ int main() {
 	try {
 		M1.readFromFile(path);
 		printf_s("Matrix M1:\n");
-		M1.writeToConsole();
+		cout << M1;
 	}
 	catch (const char* msg) {
 		cout << msg;
@@ -51,43 +51,48 @@ int main() {
 
 	CMatrix<double> M2(A, N, M), M3(B, N, M), M4(A, N, M), M5, M6(D, M, N), M7, M8, M9 = M8, M10;
 	printf_s("Matrix M2:\n");
-	M2.writeToConsole();
+	cout << M2;
 	printf_s("Matrix M3:\n");
-	M3.writeToConsole();
+	cout << M3;
 	printf_s("Matrix M4 = M2 + M3:\n");
 	M4 = M2 + M3;
-	M4.writeToConsole();
+	cout << M4;
 	printf_s("Matrix M5 = 2 * M3:\n");
 	M5 = M3 * 2;
-	M5.writeToConsole();
+	cout << M5;
 	printf_s("Matrix M6:\n");
-	M6.writeToConsole();
+	cout << M6;
 	printf_s("Matrix M7 = M2 * M6:\n");
 	M7 = M2 * M6;
-	M7.writeToConsole();
+	cout << M7;
 	printf_s("Matrix M8 = M2 + M6:\n");
 	try {
 		M8 = M6 + M2;
-		M8.writeToConsole();
+		cout << M8;
 	}
 	catch (const char *msg) {
 		cout << msg;
 	}
 	printf_s("Matrix M9 (empty):\n");
-	M9.writeToConsole();
+	cout << M9;
 	printf_s("Matrix M10 (empty => M2 + M2):\n");
 	M10 = M2 + M2;
-	M10.writeToConsole();
+	cout << M10;
 	printf_s("Matrix M11 (int test):\n");
 	CMatrix<int> M11(C, N, M);
-	M11.writeToConsole();
+	cout << M11;
 
 	printf_s("Operator << test:\n");
 	cout << M2;
 	printf_s("Operator >> test:\n");
 	CMatrix<int> M12(2, 2);
-	cin >> M12;
-	cout << M12;
+	try {
+		cin >> M12;
+		cout << M12;
+	}
+	catch (const char *msg) {
+		cout << msg;
+	}
 	for (int i = 0; i < N; i++) {
 		delete[] A[i];
 		delete[] B[i];

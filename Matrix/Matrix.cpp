@@ -64,6 +64,9 @@ bool CMatrix<T>::readFromFile(char* path) {
 
 			return true;
 		}
+		else {
+			throw "Wrong filename\n";
+		}
 	}
 	catch (const std::exception& e) {
 		cout << e.what() << '\n';
@@ -170,10 +173,14 @@ bool CMatrix<T>::operator ==(const CMatrix & m2) {
 }
 
 template <typename T>
-T* CMatrix<T>::operator[](unsigned int index) {
+T* CMatrix<T>::operator [](unsigned int index) {
+	if (index < 0) {
+		throw "Wrong index\n";
+	}
 	if (m_rows == 0 || matrix == nullptr) {
 		throw "Empty matrix\n";
 	}
+
 	return this->matrix[index];
 }
 
@@ -195,7 +202,12 @@ CMatrix<T>::~CMatrix() {
 }
 
 template <typename T>
-std::ostream & operator<<(std::ostream & os, const CMatrix<T> & x) {
+std::ostream & operator <<(std::ostream & os, const CMatrix<T> & x) {
+	if (x.m_columns == 0 || x.m_rows == 0 || x.matrix == nullptr) {
+		os << "Empty matrix\n";
+
+		return os;
+	}
 	for (int i = 0; i < x.m_rows; ++i) {
 		for (int j = 0; j < x.m_columns; ++j) {
 			os.width(4);
@@ -208,11 +220,16 @@ std::ostream & operator<<(std::ostream & os, const CMatrix<T> & x) {
 }
 
 template <typename T>
-std::istream & operator>>(std::istream & input, CMatrix<T> & matrix) {
+std::istream & operator >>(std::istream & input, CMatrix<T> & matrix) {
 	for (int i = 0; i < matrix.m_rows; ++i) {
 		for (int j = 0; j < matrix.m_columns; ++j) {
-			if (!(input >> matrix.matrix[i][j])) {
-				throw "Error in input stream\n";
+			try {
+				if (!(input >> matrix.matrix[i][j])) {
+					throw "Error in input stream\n";
+				}
+			}
+			catch (...) {
+				throw "Something go wrong... Maybe you tried to enter letters?\n";
 			}
 		}
 	}
