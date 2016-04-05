@@ -1,6 +1,6 @@
 #pragma once
 #ifndef MATR_H
-#define NATR_H
+#define MATR_H
 
 #include <iostream>
 
