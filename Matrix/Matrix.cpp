@@ -174,7 +174,7 @@ bool CMatrix<T>::operator ==(const CMatrix & m2) {
 
 template <typename T>
 T* CMatrix<T>::operator [](unsigned int index) {
-	if (index < 0) {
+	if (index < 0 || index > this->m_rows) {
 		throw "Wrong index\n";
 	}
 	if (m_rows == 0 || matrix == nullptr) {
