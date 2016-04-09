@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Matrix.h"
+#include "MatrixException.h"
 #include <string>
 #include <iostream>
 #include <fstream>
-
 using namespace std;
 
 #ifndef MATR_CPP
@@ -65,7 +65,7 @@ bool CMatrix<T>::readFromFile(char* path) {
 			return true;
 		}
 		else {
-			throw "Wrong filename\n";
+			throw initException();
 		}
 	}
 	catch (const std::exception& e) {
@@ -96,7 +96,7 @@ CMatrix<T> & CMatrix<T>::operator =(const CMatrix<T>& m2) {
 template <typename T>
 CMatrix<T> CMatrix<T>::operator +(const CMatrix<T> &m2) {
 	if (m2.m_columns != this->m_columns || m2.m_rows != this->m_rows) {
-		throw "Wrong sizes of matrixes\n";
+		throw incompatibleException();
 	}
 	CMatrix temp(this->m_rows, this->m_columns);
 	for (int i = 0; i < this->m_rows; i++) {
@@ -109,8 +109,9 @@ CMatrix<T> CMatrix<T>::operator +(const CMatrix<T> &m2) {
 
 template <typename T>
 CMatrix<T> CMatrix<T>::operator -(const CMatrix<T> &m2) {
-	if (m2.m_columns != this->m_columns || m2.m_rows != this->m_rows)
-		throw "Wrong sizes of matrixes\n";
+	if (m2.m_columns != this->m_columns || m2.m_rows != this->m_rows) {
+		throw incompatibleException();
+	}
 	CMatrix temp(this->m_rows, this->m_columns);
 	for (int i = 0; i < this->m_rows; i++) {
 		for (int j = 0; j < this->m_columns; j++) {
@@ -123,7 +124,7 @@ CMatrix<T> CMatrix<T>::operator -(const CMatrix<T> &m2) {
 template <typename T>
 CMatrix<T> CMatrix<T>::operator *(double num) {
 	if (this->matrix == nullptr || this->m_rows == 0 || this->m_columns == 0) {
-		throw "Error. Matrix is empty\n";
+		throw emptyException();
 	}
 	CMatrix temp(this->m_rows, this->m_columns);
 	for (int i = 0; i < this->m_rows; i++) {
@@ -137,7 +138,7 @@ CMatrix<T> CMatrix<T>::operator *(double num) {
 template <typename T>
 CMatrix<T> CMatrix<T>::operator *(const CMatrix &m2) {
 	if (this->m_columns != m2.m_rows) {
-		throw "Wrong sizes of matrixes\n";
+		throw incompatibleException();
 	}
 	CMatrix temp(this->m_rows, m2.m_columns);
 
@@ -174,11 +175,11 @@ bool CMatrix<T>::operator ==(const CMatrix & m2) {
 
 template <typename T>
 T* CMatrix<T>::operator [](unsigned int index) {
-	if (index < 0 || index > this->m_rows) {
-		throw "Wrong index\n";
+	if (index < 0) {
+		throw indexException();
 	}
 	if (m_rows == 0 || matrix == nullptr) {
-		throw "Empty matrix\n";
+		throw emptyException();
 	}
 
 	return this->matrix[index];
@@ -225,11 +226,11 @@ std::istream & operator >>(std::istream & input, CMatrix<T> & matrix) {
 		for (int j = 0; j < matrix.m_columns; ++j) {
 			try {
 				if (!(input >> matrix.matrix[i][j])) {
-					throw "Error in input stream\n";
+					throw initException();
 				}
 			}
 			catch (...) {
-				throw "Something go wrong... Maybe you tried to enter letters?\n";
+				throw initException();
 			}
 		}
 	}

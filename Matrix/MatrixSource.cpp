@@ -1,5 +1,6 @@
 #include "stdafx.h"
-
+#include "Matrix.h"
+#include "MatrixException.h"
 #include <time.h>
 #include <fstream>
 
@@ -19,8 +20,8 @@ int main() {
 		printf_s("Matrix M1:\n");
 		cout << M1;
 	}
-	catch (const char* msg) {
-		cout << msg;
+	catch (MatrixException& e) {
+		cout << e.what() << '\n';
 	}
 	delete[] path;
 	double **A = (double**)malloc(N * sizeof(double*));
@@ -70,8 +71,8 @@ int main() {
 		M8 = M6 + M2;
 		cout << M8;
 	}
-	catch (const char *msg) {
-		cout << msg;
+	catch (MatrixException& e) {
+		cout << e.what() << '\n';
 	}
 	printf_s("Matrix M9 (empty):\n");
 	cout << M9;
@@ -90,8 +91,8 @@ int main() {
 		cin >> M12;
 		cout << M12;
 	}
-	catch (const char *msg) {
-		cout << msg;
+	catch (MatrixException& e) {
+		cout << e.what() << '\n';
 	}
 	for (int i = 0; i < N; i++) {
 		delete[] A[i];

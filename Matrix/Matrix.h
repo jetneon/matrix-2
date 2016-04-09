@@ -2,7 +2,9 @@
 #ifndef MATR_H
 #define NATR_H
 
+#include "MatrixException.h"
 #include <iostream>
+#include <cstring>
 
 template <typename T>
 class CMatrix;
@@ -12,6 +14,7 @@ std::ostream & operator<<(std::ostream & output, const CMatrix<T> &);
 
 template <class T>
 std::istream & operator>>(std::istream & input, CMatrix<T> &);
+
 
 template <typename T>
 class CMatrix {
