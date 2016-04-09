@@ -175,7 +175,7 @@ bool CMatrix<T>::operator ==(const CMatrix & m2) {
 
 template <typename T>
 T* CMatrix<T>::operator [](unsigned int index) {
-	if (index < 0) {
+	if (index < 0 || index > this->m_rows) {
 		throw indexException();
 	}
 	if (m_rows == 0 || matrix == nullptr) {
@@ -205,9 +205,7 @@ CMatrix<T>::~CMatrix() {
 template <typename T>
 std::ostream & operator <<(std::ostream & os, const CMatrix<T> & x) {
 	if (x.m_columns == 0 || x.m_rows == 0 || x.matrix == nullptr) {
-		os << "Empty matrix\n";
-
-		return os;
+		throw emptyException();
 	}
 	for (int i = 0; i < x.m_rows; ++i) {
 		for (int j = 0; j < x.m_columns; ++j) {
@@ -238,4 +236,3 @@ std::istream & operator >>(std::istream & input, CMatrix<T> & matrix) {
 	return input;
 }
 #endif
-
