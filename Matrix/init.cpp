@@ -146,3 +146,51 @@ SCENARIO("Matrix operator <<", "[print]") {
 	REQUIRE(A[1][0] == 3);
 	REQUIRE(A[1][1] == 4);
 }
+
+SCENARIO("MatrixException: init matrix", "[init]") {
+	bool flag = false;
+	CMatrix<int> A;
+	try {
+		A.readFromFile("11111");
+	}
+	catch (MatrixException &e) {
+		flag = true;
+	}
+	REQUIRE(flag);
+}
+
+SCENARIO("MatrixException: empty matrix", "[empty]") {
+	bool flag = false;
+	CMatrix<int> A;
+	try {
+		cout << A;
+	}
+	catch (MatrixException &e) {
+		flag = true;
+	}
+	REQUIRE(flag);
+}
+
+SCENARIO("MatrixException: index error", "[index]") {
+	bool flag = false;
+	CMatrix<int> A(2, 2);
+	try {
+		int* a = A[3];
+	}
+	catch (MatrixException &e) {
+		flag = true;
+	}
+	REQUIRE(flag);
+}
+
+SCENARIO("MatrixException: incompatible matrixes", "[size]") {
+	bool flag = false;
+	CMatrix<int> A(2, 2), B(3, 3);
+	try {
+		A + B;
+	}
+	catch (MatrixException &e) {
+		flag = true;
+	}
+	REQUIRE(flag);
+}
