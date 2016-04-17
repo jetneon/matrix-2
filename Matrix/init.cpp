@@ -153,7 +153,7 @@ SCENARIO("MatrixException: init matrix", "[init]") {
 	try {
 		A.readFromFile("11111");
 	}
-	catch (MatrixException &e) {
+	catch (initException &e) {
 		flag = true;
 	}
 	REQUIRE(flag);
@@ -165,7 +165,7 @@ SCENARIO("MatrixException: empty matrix", "[empty]") {
 	try {
 		cout << A;
 	}
-	catch (MatrixException &e) {
+	catch (emptyException &e) {
 		flag = true;
 	}
 	REQUIRE(flag);
@@ -177,7 +177,7 @@ SCENARIO("MatrixException: index error", "[index]") {
 	try {
 		int* a = A[3];
 	}
-	catch (MatrixException &e) {
+	catch (indexException &e) {
 		flag = true;
 	}
 	REQUIRE(flag);
@@ -189,8 +189,19 @@ SCENARIO("MatrixException: incompatible matrixes", "[size]") {
 	try {
 		A + B;
 	}
-	catch (MatrixException &e) {
+	catch (incompatibleException &e) {
 		flag = true;
 	}
 	REQUIRE(flag);
+}
+
+SCENARIO("Matrix: operator + for double", "[addition]") {
+	CMatrix<double> A, B, expected;
+	A.readFromFile("A2x2.txt");
+	B.readFromFile("B2x2.txt");
+	expected.readFromFile("A+B.txt");
+
+	CMatrix<double> result = A + B;
+	getchar();
+	REQUIRE(result == expected);
 }
