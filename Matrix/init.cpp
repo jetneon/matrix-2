@@ -202,6 +202,5 @@ SCENARIO("Matrix: operator + for double", "[addition]") {
 	expected.readFromFile("A+B.txt");
 
 	CMatrix<double> result = A + B;
-	getchar();
 	REQUIRE(result == expected);
 }
